@@ -1,0 +1,121 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #222;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+img {
+  max-width: 100%;
+  height: 100%;
+}
+
+main {
+  padding: 10px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  margin-top: 30px;
+}
+header a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header a.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+header nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  font-size: 1.2rem;
+}
+
+div.post {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding: 5px;
+  height: auto;
+}
+
+div.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.texts h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+p.info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+p.info a {
+  text-decoration: none;
+}
+p.info time {
+  color: #888;
+}
+
+p.summary {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+form.login,
+form.register {
+  /* background-color: red; */
+  max-width: 450px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+input{
+  /* display: block; */
+  font-size: 1.2rem;
+  padding: 15px 10px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #e5e5e5;
+  outline: none;
+  font-weight: 600;
+  box-shadow: 0 0 5px #ddd;
+}
+button.f_button{
+  font-size: 1.2rem;
+  padding: 10px;
+  width: 40%;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 5px #ddd;
+}
+button.f_button:hover{
+  background-color: #cacaca;
+  cursor: pointer;
+  color: #fff;
+}
