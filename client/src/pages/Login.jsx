@@ -1,11 +1,11 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const login = async (event) => {
     event.preventDefault();
@@ -16,12 +16,15 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
+        credentials: "include",
       });
       setPassword("");
       setEmail("");
       if (response.ok) {
         console.log("response worked");
-        // navigate("/login");
+        navigate("/");
+      } else {
+        alert("Invalid Credentials !!");
       }
     } catch (error) {
       throw new Error(error);
