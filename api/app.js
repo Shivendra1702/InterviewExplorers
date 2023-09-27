@@ -61,7 +61,7 @@ app.post("/login", async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
         secure: true,
-        sameSite: "none",
+        sameSite: "None",
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // Adjust the expiration time as needed
       })
       .json({ ok: true, message: "User Logged In", user });

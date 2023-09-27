@@ -7,10 +7,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [loader, setLoader] = useState(false);
-  // <PropagateLoader color="#000000" />
 
   const { setUser } = useContext(UserContext);
-
   const navigate = useNavigate();
 
   const login = async (event) => {
