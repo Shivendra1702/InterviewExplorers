@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../UserContext";
 
 const Header = () => {
-  useEffect(() => {
-    fetch("http://localhost:4000/profile", {
+  const { user, setUser } = useContext(UserContext);
+  const handleLogout = () => {
+    fetch("http://localhost:4000/logout", {
+      method: "POST",
       credentials: "include",
     }).then((response) => {
-      response.json().then((userInfo) => {
-        console.log(userInfo);
-      });
+      if (response.ok) {
+        setUser({});
+      }
     });
-  }, []);
+  };
 
   return (
     <header>
@@ -18,8 +21,20 @@ const Header = () => {
         My Blog
       </Link>
       <nav>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
+        {user.username ? (
+          <>
+            <Link to="/new">New Post</Link>
+            <Link to="/profile">Profile</Link>
+            <button className="logout_btn" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
       </nav>
     </header>
   );

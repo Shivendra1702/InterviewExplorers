@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PropagateLoader } from "react-spinners";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
 
   const register = async (event) => {
     event.preventDefault();
     try {
+      setLoader(true);
       const response = await fetch(`http://localhost:4000/register`, {
         method: "POST",
         headers: {
@@ -26,6 +29,8 @@ const Register = () => {
       }
     } catch (error) {
       throw new Error(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -51,7 +56,12 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="f_button">Register</button>
+
+        {loader ? (
+          <PropagateLoader color="#000000" />
+        ) : (
+          <button className="f_button">Register</button>
+        )}
       </form>
     </>
   );

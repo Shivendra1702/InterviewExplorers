@@ -19,7 +19,7 @@ app.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) {
+    if (user) {
       return res.status(400).json({ message: "User already exists" });
     }
     const newUser = await User.create({
@@ -56,13 +56,15 @@ app.post("/login", async (req, res) => {
       return res.status(400).json({ ok: false, message: "Invalid Password" });
 
     const token = user.getJwtToken();
-    // console.log(`getJwtToken: ${token}`);
     return res
       .status(200)
       .cookie("token", token, {
-        expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // Adjust the expiration time as needed
       })
-      .json({ ok: true, message: "User Logged In" });
+      .json({ ok: true, message: "User Logged In", user });
   } catch (error) {
     return res.status(400).json({
       ok: false,
@@ -93,6 +95,28 @@ app.get("/profile", async (req, res) => {
     return res.status(400).json({
       ok: false,
       message: `Error : ${error}`,
+    });
+  }
+});
+
+app.post("/logout", async (req, res) => {
+  try {
+    return res
+      .cookie("token", null, {
+        expires: new Date(Date.now()),
+        sameSite: "None",
+        secure: true,
+        httpOnly: true,
+      })
+      .status(200)
+      .json({
+        ok: true,
+        message: "User Logged Out",
+      });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      message: `Error Logging out User: ${error}`,
     });
   }
 });

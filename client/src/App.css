@@ -119,3 +119,18 @@ button.f_button:hover{
   cursor: pointer;
   color: #fff;
 }
+
+button.logout_btn{
+  font-size: 1.2rem;
+  padding: 10px;
+  width: 40%;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 5px #ddd;
+  background-color: #c9c9c9;
+  color: #fff;
+}
+button.logout_btn:hover{
+  background-color: #a8a8a8;
+  cursor: pointer;
+  color: #fff;
+}
