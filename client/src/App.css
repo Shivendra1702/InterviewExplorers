@@ -3,12 +3,15 @@
   padding: 0;
   box-sizing: border-box;
   color: #222;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: sans-serif; */
+  font-family: "Roboto", sans-serif;
 }
 
 img {
   max-width: 100%;
   height: 100%;
+  object-fit: contain;
+  object-position: center center;
 }
 
 main {
@@ -24,6 +27,7 @@ header {
   margin-bottom: 60px;
   margin-top: 30px;
 }
+
 header a {
   text-decoration: none;
   color: inherit;
@@ -41,6 +45,42 @@ header nav {
   gap: 40px;
   font-size: 1.2rem;
 }
+header .ham {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  header nav {
+    display: none;
+  }
+  header .ham {
+    display: block;
+    font-size: 2rem;
+  }
+  header {
+    flex-direction: column;
+    margin-bottom: 30px;
+    margin-top: 15px;
+  }
+  .logo_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  nav.active {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    padding: 20px;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    background-color: #ffffffe4;
+  }
+}
 
 div.post {
   display: grid;
@@ -50,17 +90,49 @@ div.post {
   padding: 5px;
   height: auto;
   border-radius: 10px;
+  height: 255px;
+
+  background-color: #c3c3c33b;
+  box-shadow: 0 0 10px #c3c3c3;
+}
+div.post a {
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  div.post {
+    grid-template-columns: 1fr;
+    height: auto;
+    text-align: center;
+  }
+  div.post p.info {
+    justify-content: center;
+  }
+  div.post p.summary {
+    text-align: justify;
+  }
+  div.post div.image {
+    width: 100%;
+  }
 }
 
 div.post:hover {
-  background-color: #c3c3c33b;
-  box-shadow: 0 0 10px #c3c3c3;
+  background-color: #c3c3c36a;
 }
 
 div.image {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+  max-height: 250px;
+  width: 400px;
+}
+div.image img {
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
 }
 
 div.texts h2 {
@@ -168,4 +240,114 @@ div.cp_loader {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+div.single_post {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+div.single_post div.heading {
+  margin: 1em;
+  text-align: center;
+}
+div.single_post div.meta_data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5em;
+}
+
+div.single_post div.meta_data time {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+div.single_post div.cover_image {
+  height: 350px;
+  width: 700px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 1em;
+}
+
+div.single_post div.cover_image img {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 600px) {
+  div.single_post div.cover_image {
+    height: 200px;
+    width: 300px;
+  }
+
+  div.single_post div.cover_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
+
+div.single_post div.content {
+  margin-top: 1em;
+  text-align: justify;
+  line-height: 1.5;
+  font-size: 1.2rem;
+  margin-bottom: 1.5em;
+}
+
+div.single_post div.last_updated {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1em;
+}
+div.single_post div.last_updated time {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+div.loader {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.profile_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+div.profile_wrapper div.my_posts {
+  margin-top: 1em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+div.del_edit_btns {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  align-items: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+div.del_edit_btns button.del {
+  background-color: red;
+}
+
+div.del_edit_btns button.del:hover {
+  background-color: rgba(188, 0, 0, 0.753);
 }

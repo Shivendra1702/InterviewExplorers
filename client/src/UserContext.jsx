@@ -11,6 +11,7 @@ export function UserContextProvider({ children }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
         body: JSON.stringify({ token }),

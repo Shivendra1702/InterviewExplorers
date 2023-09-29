@@ -2,19 +2,19 @@ const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema(
   {
-    author:{
+    author: {
       type: String,
       required: true,
     },
     title: {
       type: String,
       required: true,
-      maxlength: [100, "Please keep Title Short!!"],
+      maxlength: [200, "Please keep Title Short!!"],
     },
     summary: {
       type: String,
       // required: true,
-      maxlength: [200, "Please keep Summary Short!!"],
+      maxlength: [400, "Please keep Summary Short!!"],
     },
     content: {
       type: String,

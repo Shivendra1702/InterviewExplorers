@@ -13,7 +13,6 @@ const Post = ({ post }) => {
         <Link to={`/post/${post._id}`}>
           <h2>{post.title}</h2>
         </Link>
-
         <p className="info">
           <a href="" className="author">
             {post.author}

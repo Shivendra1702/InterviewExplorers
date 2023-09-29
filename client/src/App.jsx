@@ -9,6 +9,7 @@ import Missing from "./pages/Missing";
 import CreatePost from "./pages/CreatePost";
 import Profile from "./pages/Profile";
 import SinglePost from "./pages/SinglePost";
+import EditPost from "./pages/EditPost";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/create" element={<CreatePost />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/post/:id" element={<SinglePost />} />
+          <Route path="/editpost/:id" element={<EditPost />} />
         </Route>
         <Route path="*" element={<Missing />} />
       </Routes>

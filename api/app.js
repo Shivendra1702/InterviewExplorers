@@ -67,6 +67,7 @@ app.post("/login", async (req, res) => {
       return res.status(400).json({ ok: false, message: "Invalid Password" });
 
     const token = user.getJwtToken();
+    req.user = user;
     return res
       .status(200)
       .json({ ok: true, message: "User Logged In", user, token });
@@ -80,22 +81,14 @@ app.post("/login", async (req, res) => {
 
 app.post("/profile", async (req, res) => {
   try {
-    const { token } = req.body;
-
-    if (!token) {
-      return res.status(401).json({ ok: false, message: "Unauthorized" });
+    const token =
+      req.header("Authorization").replace("Bearer ", "") || req.body.token;
+    const userJwt = jwt.verify(token, process.env.JWT_SECRET, {});
+    const user = await User.findById(userJwt.id);
+    if (!user) {
+      return res.status(400).json({ ok: false, message: "User not found" });
     }
-
-    jwt.verify(token, process.env.JWT_SECRET, {}, async (err, info) => {
-      if (err) {
-        throw err;
-      } else {
-        const user = await User.findById(info.id);
-        return res
-          .status(200)
-          .json({ ok: true, message: "Authorized", info, user });
-      }
-    });
+    return res.status(200).json({ ok: true, message: "Authorized", user });
   } catch (error) {
     return res.status(400).json({
       ok: false,
@@ -106,7 +99,6 @@ app.post("/profile", async (req, res) => {
 
 app.post("/logout", async (req, res) => {
   try {
-    console.log(`sexy: ${req.body.token}`);
     return res.status(200).json({
       ok: true,
       message: "User Logged Out",
@@ -121,8 +113,6 @@ app.post("/logout", async (req, res) => {
 
 app.post("/post", async (req, res) => {
   try {
-    // console.log(req.body);
-    // console.log(req.files);
     if (!req.files) {
       return res.status(400).json({
         ok: false,
@@ -147,7 +137,6 @@ app.post("/post", async (req, res) => {
 
     const user = jwt.verify(token, process.env.JWT_SECRET, {});
     const person = await User.findById(user.id);
-    console.log(person.username);
 
     const post = await Post.create({
       author: person.username,
@@ -186,6 +175,100 @@ app.get("/posts", async (req, res) => {
     return res.status(400).json({
       ok: false,
       message: `Error Fetching Posts: ${error}`,
+    });
+  }
+});
+
+app.get("/post/:id", async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await Post.findById(postId);
+    return res.status(200).json({
+      ok: true,
+      message: "Post Fetched",
+      post,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      message: `Error Fetching Post: ${error}`,
+    });
+  }
+});
+
+app.get("/getmyposts/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const posts = await Post.find({ user: userId }).sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      ok: true,
+      message: "User Posts Fetched",
+      posts,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      message: `Error Fetching User Posts: ${error}`,
+    });
+  }
+});
+
+app.delete("/deletepost/:id", async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await Post.findById(postId);
+    await cloudinary.uploader.destroy(post.cover.id);
+    await Post.findByIdAndDelete(postId);
+    return res.status(200).json({
+      ok: true,
+      message: "Post Deleted",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      message: `Error Deleting Post: ${error}`,
+    });
+  }
+});
+
+app.put("/editpost/:id", async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await Post.findById(postId);
+    console.log(post);
+
+    if (req.body.title) post.title = req.body.title;
+
+    if (req.body.summary) post.summary = req.body.summary;
+
+    if (req.body.content) post.content = req.body.content;
+
+    if (req.files) {
+      await cloudinary.uploader.destroy(post.cover.id);
+      const image = await cloudinary.uploader.upload(
+        req.files.file.tempFilePath,
+        {
+          folder: "InterviewExplorers",
+        }
+      );
+      post.cover.url = image.url;
+      post.cover.id = image.public_id;
+    }
+
+    post.save({
+      validateBeforeSave: false,
+    });
+
+    return res.status(200).json({
+      ok: true,
+      message: "Post Edited",
+      post,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      message: `Error Editing Post: ${error}`,
     });
   }
 });

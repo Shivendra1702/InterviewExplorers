@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
+import { GiHamburgerMenu } from "react-icons/gi";
+// import { AiOutlineRollback } from "react-icons/ai";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   // const token = localStorage.getItem("token");
   // console.log(token);
@@ -22,26 +25,46 @@ const Header = () => {
 
     localStorage.removeItem("token");
     setUser({});
+    navigate("/");
+  };
+  // AiOutlineRollback
+
+  const handleHam = () => {
+    const nav = document.querySelector("nav");
+    nav.classList.toggle("active");
   };
 
   return (
-    <header>
-      <Link to="/" className="logo">
-        InterviewExplorers
-      </Link>
-      <nav>
+    <header className="active">
+      <div className="logo_container">
+        <Link to="/" className="logo">
+          <span style={{ fontWeight: "1" }}>Interview</span>Explorers
+        </Link>
+        <span className="ham_span">
+          <GiHamburgerMenu className="ham" onClick={handleHam} />
+        </span>
+      </div>
+      <nav className="">
         {user.username ? (
           <>
-            <Link to="/create">NewPost</Link>
-            <Link to="/profile">Profile</Link>
+            <Link to="/create" onClick={handleHam}>
+              NewPost
+            </Link>
+            <Link to="/profile" onClick={handleHam}>
+              Profile
+            </Link>
             <button className="logout_btn" onClick={handleLogout}>
-              Logout
+              <span onClick={handleHam}>Logout</span>
             </button>
           </>
         ) : (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+            <Link to="/login" onClick={handleHam}>
+              Login
+            </Link>
+            <Link to="/register" onClick={handleHam}>
+              Register
+            </Link>
           </>
         )}
       </nav>
