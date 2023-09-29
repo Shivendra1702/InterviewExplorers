@@ -27,8 +27,8 @@ const Login = () => {
       setEmail("");
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem("token", data.token);
         setUser(data.user); //
-        console.log("response worked");
         navigate("/");
       } else {
         alert("Invalid Credentials !!");
@@ -49,12 +49,14 @@ const Login = () => {
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          name="email"
         />
         <input
           type="password"
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          name="password"
         />
 
         {loader ? (

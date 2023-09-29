@@ -43,18 +43,21 @@ const Register = () => {
           placeholder="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          name="username"
         />
         <input
           type="email"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          name="email"
         />
         <input
           type="password"
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          name="password"
         />
 
         {loader ? (

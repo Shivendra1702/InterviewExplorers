@@ -1,27 +1,27 @@
-const Post = () => {
+import { Link } from "react-router-dom";
+import { format } from "date-fns";
+/* eslint-disable react/prop-types */
+const Post = ({ post }) => {
   return (
     <div className="post">
       <div className="image">
-        <img
-          src="https://techcrunch.com/wp-content/uploads/2022/04/GettyImages-1303427084.jpg?w=430&h=230&crop=1"
-          alt=""
-        />
+        <Link to={`/post/${post._id}`}>
+          <img src={post.cover.url} alt="" />
+        </Link>
       </div>
       <div className="texts">
-        <h2>
-          TrueMed’s payment integration platform unlocks HSA/FSA for health, not
-          sickness
-        </h2>
+        <Link to={`/post/${post._id}`}>
+          <h2>{post.title}</h2>
+        </Link>
+
         <p className="info">
           <a href="" className="author">
-            Shivendra Pratap
+            {post.author}
           </a>
-          <time>2023-01-06 10:30</time>
+          <time>{format(new Date(post.createdAt), "MMM dd , yyyy hh:mm")}</time>
         </p>
-        <p className="summary">
-          Medication might be easier than exercise or eating right, however
-          TrueMed wants to change your thinking on that.
-        </p>
+
+        <p className="summary">{post.summary}</p>
       </div>
     </div>
   );
