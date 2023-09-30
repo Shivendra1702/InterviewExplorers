@@ -6,20 +6,23 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [files, setFiles] = useState("");
   const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
 
   const register = async (event) => {
-    event.preventDefault();
     try {
       setLoader(true);
+      const formData = new FormData();
+      formData.set("username", username);
+      formData.set("email", email);
+      formData.set("password", password);
+      formData.set("photo", files[0]);
+      event.preventDefault();
       const response = await fetch(`http://localhost:4000/register`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email, password }),
+        body: formData,
       });
       setUsername("");
       setPassword("");
@@ -59,6 +62,20 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           name="password"
         />
+
+        <div
+          style={{
+            display: "flex",
+            // flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "1rem",
+            textAlign: "center",
+          }}
+        >
+          Select Profile Image :
+          <input type="file" onChange={(e) => setFiles(e.target.files)} />
+        </div>
 
         {loader ? (
           <PropagateLoader color="#000000" />

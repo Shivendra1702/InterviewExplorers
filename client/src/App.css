@@ -277,17 +277,10 @@ div.single_post div.cover_image img {
   height: 100%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
   div.single_post div.cover_image {
     height: 200px;
     width: 300px;
-  }
-
-  div.single_post div.cover_image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
   }
 }
 
@@ -297,17 +290,6 @@ div.single_post div.content {
   line-height: 1.5;
   font-size: 1.2rem;
   margin-bottom: 1.5em;
-}
-
-div.single_post div.last_updated {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 1em;
-}
-div.single_post div.last_updated time {
-  color: #888;
-  font-size: 0.8rem;
 }
 
 div.loader {
@@ -333,6 +315,19 @@ div.profile_wrapper div.my_posts {
   align-items: center;
   gap: 30px;
 }
+/* handle image */
+div.profile_wrapper div.profile_image {
+  width: 150px;
+  height: auto;
+  border-radius: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+div.profile_wrapper div.profile_image img {
+  width: 100%;
+  height: 100%;
+}
 
 div.del_edit_btns {
   width: 100%;
@@ -350,4 +345,74 @@ div.del_edit_btns button.del {
 
 div.del_edit_btns button.del:hover {
   background-color: rgba(188, 0, 0, 0.753);
+}
+
+div.comment_section {
+  margin-top: 4em;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+div.comment_section div.comment_input {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+div.comment_section div.all_comments {
+  margin-top: 1em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
+}
+
+div.comment_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+}
+
+div.user_photo {
+  width: 50px;
+  height: auto;
+  border-radius: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+div.user_photo img {
+  width: 100%;
+  height: 100%;
+}
+
+div.comment_wrapper div.user_comment {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+div.comment_wrapper div.user_comment div.user_name {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+div.user_comment_reply {
+  width: 100%;
+  display: flex;
+  gap: 10px;
 }

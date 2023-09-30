@@ -45,7 +45,6 @@ const Profile = () => {
       })
       .finally(() => {
         setLoader(false);
-
       });
   };
   // if (loader) {
@@ -58,6 +57,11 @@ const Profile = () => {
   return (
     <div className="profile_wrapper">
       <h1>Profile</h1>
+
+      <div className="profile_image">
+        <img src={user.photo?.url} alt="Profile Photo" />
+      </div>
+
       <div className="user_name">
         <span>User Name :</span>
         <span> {user.username}</span>

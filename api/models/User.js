@@ -19,6 +19,16 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: [6, "Password Must be 6 characters Long !"],
   },
+  photo: {
+    id: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+  },
 });
 
 userSchema.pre("save", async function (next) {

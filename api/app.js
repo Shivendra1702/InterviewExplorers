@@ -27,8 +27,27 @@ app.use(
 
 // Routes
 app.post("/register", async (req, res) => {
+  let image;
   try {
+    if (!req.files) {
+      return res.status(400).json({
+        ok: false,
+        message: `Please Select Profile Image`,
+      });
+    }
+    console.log(req.files);
     const { username, email, password } = req.body;
+    if (!(username && email && password)) {
+      return res.status(400).json({
+        ok: false,
+        message: `Please add all the fields`,
+      });
+    }
+
+    image = await cloudinary.uploader.upload(req.files.photo.tempFilePath, {
+      folder: "InterviewExplorers",
+    });
+
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ message: "User already exists" });
@@ -37,6 +56,10 @@ app.post("/register", async (req, res) => {
       username,
       email,
       password,
+      photo: {
+        id: image.public_id,
+        url: image.url,
+      },
     });
     return res
       .status(201)
@@ -182,7 +205,10 @@ app.get("/posts", async (req, res) => {
 app.get("/post/:id", async (req, res) => {
   try {
     const postId = req.params.id;
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId).populate(
+      "comments.userId",
+      "username photo.url"
+    );
     return res.status(200).json({
       ok: true,
       message: "Post Fetched",
@@ -269,6 +295,37 @@ app.put("/editpost/:id", async (req, res) => {
     return res.status(400).json({
       ok: false,
       message: `Error Editing Post: ${error}`,
+    });
+  }
+});
+
+app.post("/addcomment", async (req, res) => {
+  try {
+    const { postId, userId, comment } = req.body;
+    if (!(postId && userId && comment)) {
+      return res.status(400).json({
+        ok: false,
+        message: `PostId, UserId and Comment Required`,
+      });
+    }
+    const post = await Post.findById(postId);
+    post.comments.push({
+      postId,
+      userId,
+      comment,
+    });
+    post.save({
+      validateBeforeSave: false,
+    });
+    return res.status(200).json({
+      ok: true,
+      message: "Comment Added",
+      post,
+    });
+  } catch (error) {
+    return res.json({
+      ok: false,
+      message: `Error Adding Comment: ${error}`,
     });
   }
 });
