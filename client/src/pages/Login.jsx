@@ -15,7 +15,7 @@ const Login = () => {
     event.preventDefault();
     try {
       setLoader(true);
-      const response = await fetch(`http://localhost:4000/login`, {
+      const response = await fetch(`${import.meta.env.VITE_NODE_API}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

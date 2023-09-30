@@ -55,7 +55,7 @@ const CreatePost = () => {
 
       e.preventDefault();
 
-      fetch("http://localhost:4000/post", {
+      fetch(`${import.meta.env.VITE_NODE_API}/post`, {
         method: "POST",
         body: data,
       })

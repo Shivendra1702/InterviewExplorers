@@ -10,7 +10,7 @@ const Header = () => {
   // const token = localStorage.getItem("token");
   // console.log(token);
   const handleLogout = () => {
-    // fetch("http://localhost:4000/logout", {
+    // fetch(`${import.meta.env.VITE_NODE_API}/logout`, {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json",
@@ -54,7 +54,9 @@ const Header = () => {
               Profile
             </Link>
             <button className="logout_btn" onClick={handleLogout}>
-              <span onClick={handleHam}>Logout</span>
+              <span onClick={handleHam} style={{ color: "white" }}>
+                Logout
+              </span>
             </button>
           </>
         ) : (

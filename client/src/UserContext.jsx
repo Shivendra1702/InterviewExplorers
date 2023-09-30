@@ -7,7 +7,7 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:4000/profile", {
+      fetch(`${import.meta.env.VITE_NODE_API}/profile`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

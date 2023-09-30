@@ -7,7 +7,7 @@ const Posts = () => {
   const [loader, setLoader] = useState(false);
   useEffect(() => {
     setLoader(true);
-    fetch("http://localhost:4000/posts", {
+    fetch(`${import.meta.env.VITE_NODE_API}/posts`, {
       method: "GET",
     })
       .then((response) => {

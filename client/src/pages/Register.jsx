@@ -20,7 +20,7 @@ const Register = () => {
       formData.set("password", password);
       formData.set("photo", files[0]);
       event.preventDefault();
-      const response = await fetch(`http://localhost:4000/register`, {
+      const response = await fetch(`${import.meta.env.VITE_NODE_API}/register`, {
         method: "POST",
         body: formData,
       });

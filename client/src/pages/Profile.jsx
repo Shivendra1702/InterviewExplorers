@@ -10,7 +10,7 @@ const Profile = () => {
 
   useEffect(() => {
     setLoader(true);
-    fetch("http://localhost:4000/profile", {
+    fetch(`${import.meta.env.VITE_NODE_API}/profile`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const Profile = () => {
 
   const GetMyPosts = async () => {
     setLoader(true);
-    fetch(`http://localhost:4000/getmyposts/${user._id}`)
+    fetch(`${import.meta.env.VITE_NODE_API}/getmyposts/${user._id}`)
       .then((response) => {
         return response.json();
       })
@@ -47,13 +47,7 @@ const Profile = () => {
         setLoader(false);
       });
   };
-  // if (loader) {
-  //   return (
-  //     <div className="loader">
-  //       <PropagateLoader color="black" />
-  //     </div>
-  //   );
-  // }
+
   return (
     <div className="profile_wrapper">
       <h1>Profile</h1>
@@ -63,12 +57,12 @@ const Profile = () => {
       </div>
 
       <div className="user_name">
-        <span>User Name :</span>
+        <span className="label">User Name :</span>
         <span> {user.username}</span>
       </div>
 
       <div className="user_email">
-        <span>User Email :</span>
+        <span className="label">User Email :</span>
         <span> {user.email}</span>
       </div>
 

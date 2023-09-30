@@ -20,13 +20,12 @@ const SinglePost = () => {
 
   useEffect(() => {
     setLoader(true);
-    fetch(`http://localhost:4000/post/${id}`)
+    fetch(`${import.meta.env.VITE_NODE_API}/post/${id}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.ok) {
           setPost(data.post);
           setComments(data.post.comments);
-          console.log(data.post);
         }
       })
       .catch((err) => {
@@ -39,7 +38,7 @@ const SinglePost = () => {
 
   const handleDelete = () => {
     setDelLoader(true);
-    fetch(`http://localhost:4000/deletepost/${post._id}`, {
+    fetch(`${import.meta.env.VITE_NODE_API}/deletepost/${post._id}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
@@ -66,7 +65,7 @@ const SinglePost = () => {
     commentData.set("userId", user._id);
     commentData.set("postId", post._id);
 
-    fetch(`http://localhost:4000/addcomment`, {
+    fetch(`${import.meta.env.VITE_NODE_API}/addcomment`, {
       method: "POST",
       body: commentData,
     })

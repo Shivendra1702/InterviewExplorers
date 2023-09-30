@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
   color: #222;
-  /* font-family: sans-serif; */
   font-family: "Roboto", sans-serif;
 }
 
@@ -49,7 +48,7 @@ header .ham {
   display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
   header nav {
     display: none;
   }
@@ -91,28 +90,42 @@ div.post {
   height: auto;
   border-radius: 10px;
   height: 255px;
-
   background-color: #c3c3c33b;
   box-shadow: 0 0 10px #c3c3c3;
+}
+div.post div.texts {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
 }
 div.post a {
   text-decoration: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
   div.post {
     grid-template-columns: 1fr;
     height: auto;
     text-align: center;
+    gap: 5px;
   }
-  div.post p.info {
+  div.post div.texts p.info {
     justify-content: center;
+  }
+  div.post div.texts h2 {
+    font-size: 1.3em;
   }
   div.post p.summary {
     text-align: justify;
+    font-size: 0.9em;
+    /* line-height: 1.3em; */
   }
   div.post div.image {
     width: 100%;
+    margin: auto;
+    margin-top: 10px;
+    padding: 10px;
   }
 }
 
@@ -164,7 +177,6 @@ p.summary {
 
 form.login,
 form.register {
-  /* background-color: red; */
   max-width: 450px;
   margin: 0 auto;
   display: flex;
@@ -174,13 +186,12 @@ form.register {
 }
 
 input {
-  /* display: block; */
   font-size: 1.2rem;
   padding: 15px 10px;
   width: 100%;
   border: 1px solid #ddd;
   border-radius: 5px;
-  background-color: #e5e5e5;
+  background-color: #dddddd;
   outline: none;
   font-weight: 600;
   box-shadow: 0 0 5px #ddd;
@@ -195,7 +206,8 @@ button.create_btn {
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 0 5px #ddd;
-  background-color: #c9c9c9;
+
+  background-color: #888888;
   color: #fff;
 }
 button.create_btn {
@@ -217,7 +229,6 @@ div.missing {
   flex-direction: column;
   height: 100vh;
   font-size: 2rem;
-  /* font-weight: bold; */
 }
 
 div.missing h1 {
@@ -281,6 +292,13 @@ div.single_post div.cover_image img {
   div.single_post div.cover_image {
     height: 200px;
     width: 300px;
+    margin-bottom: 0em;
+  }
+  div.single_post div.heading {
+    font-size: 0.9em;
+  }
+  div.single_post div.meta_data {
+    margin-bottom: 0.5em;
   }
 }
 
@@ -307,6 +325,10 @@ div.profile_wrapper {
   gap: 20px;
 }
 
+span.label {
+  color: #888888;
+}
+
 div.profile_wrapper div.my_posts {
   margin-top: 1em;
   width: 100%;
@@ -315,7 +337,7 @@ div.profile_wrapper div.my_posts {
   align-items: center;
   gap: 30px;
 }
-/* handle image */
+
 div.profile_wrapper div.profile_image {
   width: 150px;
   height: auto;
@@ -327,6 +349,28 @@ div.profile_wrapper div.profile_image {
 div.profile_wrapper div.profile_image img {
   width: 100%;
   height: 100%;
+}
+
+@media (max-width: 750px) {
+  div.profile_wrapper div.profile_image {
+    width: 100px;
+  }
+
+  div.profile_wrapper {
+    gap: 15px;
+  }
+
+  div.profile_wrapper div.user_email,
+  div.profile_wrapper div.user_name {
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  div.profile_wrapper div.my_posts button {
+    width: 80%;
+  }
 }
 
 div.del_edit_btns {
@@ -415,4 +459,16 @@ div.user_comment_reply {
   width: 100%;
   display: flex;
   gap: 10px;
+}
+
+@media (max-width: 750px) {
+  div.comment_input button {
+    font-size: 1em;
+  }
+  div.user_name {
+    font-size: 0.7em;
+  }
+  div.user_comment_text {
+    font-size: 0.8em;
+  }
 }

@@ -44,7 +44,7 @@ const EditPost = () => {
 
   useEffect(() => {
     setLoader(true);
-    fetch(`http://localhost:4000/post/${id}`)
+    fetch(`${import.meta.env.VITE_NODE_API}/post/${id}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.ok) {
@@ -80,7 +80,7 @@ const EditPost = () => {
 
       e.preventDefault();
 
-      fetch(`http://localhost:4000/editpost/${id}`, {
+      fetch(`${import.meta.env.VITE_NODE_API}/editpost/${id}`, {
         method: "PUT",
         body: data,
       })
