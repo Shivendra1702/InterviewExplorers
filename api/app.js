@@ -14,7 +14,10 @@ const postRouter = require("./routes/postRoute");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
-  cors({ credentials: true, origin: "https://interviewexplorers.onrender.com" })
+  cors({
+    credentials: true,
+    origin: "https://interviewexplorers-xi2b.onrender.com/",
+  })
 );
 app.use(morgan("dev"));
 app.use(cookieParser());
