@@ -2,11 +2,11 @@ import { format } from "date-fns";
 import { AiFillDelete } from "react-icons/ai";
 import { UserContext } from "../UserContext";
 import { useContext } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+// import { Navigate, useNavigate } from "react-router-dom";
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 const Comment = ({ comment }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
   const DeleteComment = () => {
@@ -16,9 +16,9 @@ const Comment = ({ comment }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.ok) {
-          // window.location.reload();
+          window.location.reload();
           // navigate(`/post/${comment.postId}`);
-          return Navigate(`/post/${comment.postId}`);
+          // return Navigate(`/post/${comment.postId}`);
         }
       })
       .catch((err) => {
