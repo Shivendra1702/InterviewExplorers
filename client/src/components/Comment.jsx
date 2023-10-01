@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { AiFillDelete } from "react-icons/ai";
 import { UserContext } from "../UserContext";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 const Comment = ({ comment }) => {
@@ -16,7 +16,9 @@ const Comment = ({ comment }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.ok) {
-          navigate(`/post/${comment.postId}`);
+          // window.location.reload();
+          // navigate(`/post/${comment.postId}`);
+          return Navigate(`/post/${comment.postId}`);
         }
       })
       .catch((err) => {
