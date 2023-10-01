@@ -7,27 +7,12 @@ import { GiHamburgerMenu } from "react-icons/gi";
 const Header = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
-  // const token = localStorage.getItem("token");
-  // console.log(token);
-  const handleLogout = () => {
-    // fetch(`${import.meta.env.VITE_NODE_API}/logout`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   credentials: "include",
-    //   body: JSON.stringify({ token }),
-    // }).then((response) => {
-    //   if (response.ok) {
-    //     setUser({});
-    //   }
-    // });
 
+  const handleLogout = () => {
     localStorage.removeItem("token");
     setUser({});
     navigate("/");
   };
-  // AiOutlineRollback
 
   const handleHam = () => {
     const nav = document.querySelector("nav");
