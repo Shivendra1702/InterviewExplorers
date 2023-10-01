@@ -13,7 +13,9 @@ const postRouter = require("./routes/postRoute");
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({ credentials: true, origin: "http://127.0.0.1:5173" }));
+app.use(
+  cors({ credentials: true, origin: "https://interviewexplorers.onrender.com" })
+);
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(
