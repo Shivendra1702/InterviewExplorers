@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Post from "../components/Post";
 import { PropagateLoader } from "react-spinners";
+import { Navigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 const Profile = () => {
   const token = localStorage.getItem("token");
-  const [user, setUser] = useState({});
+  const [userDetail, setUserDetail] = useState({});
   const [posts, setPosts] = useState([]);
   const [loader, setLoader] = useState(false);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     setLoader(true);
@@ -21,7 +24,7 @@ const Profile = () => {
         return response.json();
       })
       .then((data) => {
-        setUser(data.user);
+        setUserDetail(data.user);
       })
       .catch((err) => {
         throw new Error(err);
@@ -33,7 +36,7 @@ const Profile = () => {
 
   const GetMyPosts = async () => {
     setLoader(true);
-    fetch(`${import.meta.env.VITE_NODE_API}/getmyposts/${user._id}`)
+    fetch(`${import.meta.env.VITE_NODE_API}/getmyposts/${userDetail._id}`)
       .then((response) => {
         return response.json();
       })
@@ -48,22 +51,26 @@ const Profile = () => {
       });
   };
 
+  if (!user.username) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div className="profile_wrapper">
       <h1>Profile</h1>
 
       <div className="profile_image">
-        <img src={user.photo?.url} alt="Profile Photo" />
+        <img src={userDetail.photo?.url} alt="Profile Photo" />
       </div>
 
       <div className="user_name">
         <span className="label">User Name :</span>
-        <span> {user.username}</span>
+        <span> {userDetail.username}</span>
       </div>
 
       <div className="user_email">
         <span className="label">User Email :</span>
-        <span> {user.email}</span>
+        <span> {userDetail.email}</span>
       </div>
 
       <div className="my_posts">

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { PropagateLoader } from "react-spinners";
+import { UserContext } from "../UserContext";
 
 const modules = {
   toolbar: [
@@ -34,6 +35,8 @@ const formats = [
 ];
 
 const CreatePost = () => {
+  const { user } = useContext(UserContext);
+
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [files, setFiles] = useState("");
@@ -82,6 +85,10 @@ const CreatePost = () => {
       throw new Error(`Error Creating Post: ${error}`);
     }
   };
+
+  if (!user.username) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <form className="create_form" onSubmit={handleSubmit}>

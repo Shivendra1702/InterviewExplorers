@@ -35,28 +35,6 @@ const PostSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    comments: [
-      {
-        postId: {
-          type: mongoose.Schema.ObjectId,
-          ref: "Post",
-          required: true,
-        },
-        userId: {
-          type: mongoose.Schema.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        comment: {
-          type: String,
-          required: true,
-        },
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
-      },
-    ],
   },
   {
     timestamps: true,

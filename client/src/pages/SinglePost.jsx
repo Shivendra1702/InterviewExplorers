@@ -16,6 +16,7 @@ const SinglePost = () => {
   const { id } = useParams();
   const [loader, setLoader] = useState(false);
   const [delLoader, setDelLoader] = useState(false);
+  const [commentInputLoader, setCommentInputLoader] = useState(false);
   const [post, setPost] = useState({});
 
   useEffect(() => {
@@ -25,7 +26,6 @@ const SinglePost = () => {
       .then((data) => {
         if (data.ok) {
           setPost(data.post);
-          setComments(data.post.comments);
         }
       })
       .catch((err) => {
@@ -33,6 +33,16 @@ const SinglePost = () => {
       })
       .finally(() => {
         setLoader(false);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_NODE_API}/getcomments/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.ok) {
+          setComments(data.comments);
+        }
       });
   }, [id]);
 
@@ -60,6 +70,7 @@ const SinglePost = () => {
   };
 
   const handleAddComment = () => {
+    setCommentInputLoader(true);
     let commentData = new FormData();
     commentData.set("comment", comment);
     commentData.set("userId", user._id);
@@ -74,12 +85,15 @@ const SinglePost = () => {
       })
       .then((data) => {
         if (data.ok) {
-          console.log(data.post);
+          setComments((prevComments) => [data.newComment, ...prevComments]);
           setComment("");
         }
       })
       .catch((err) => {
         throw new Error(`Error in adding comment ${err}`);
+      })
+      .finally(() => {
+        setCommentInputLoader(false);
       });
   };
 
@@ -130,24 +144,31 @@ const SinglePost = () => {
             <div className="comment_heading">
               <h1>{comments.length} Comments ~</h1>
             </div>
-            {user._id && (
-              <div className="comment_input">
-                <input
-                  type="text"
-                  placeholder="Write your comment here"
-                  name="comment"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                />
-                <button className="f_button" onClick={handleAddComment}>
-                  Add Comment
-                </button>
-              </div>
-            )}
+            {user._id &&
+              (commentInputLoader ? (
+                <div className="loader" style={{
+                  height: "50px",
+                }}>
+                  <PropagateLoader color="#000000" />
+                </div>
+              ) : (
+                <div className="comment_input">
+                  <input
+                    type="text"
+                    placeholder="Write your comment here"
+                    name="comment"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                  <button className="f_button" onClick={handleAddComment}>
+                    Add Comment
+                  </button>
+                </div>
+              ))}
 
             <div className="all_comments">
               {comments?.map((comment) => {
-                return <Comment key={comment._id} comment={comment} />;
+                return <Comment key={comment?._id} comment={comment} />;
               })}
             </div>
           </div>

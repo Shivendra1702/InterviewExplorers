@@ -70,9 +70,13 @@ const login = async (req, res) => {
 
     const token = user.getJwtToken();
     req.user = user;
-    return res
-      .status(200)
-      .json({ ok: true, message: "User Logged In", user, token });
+
+    return (
+      res
+        .status(200)
+        // .header("Authorization", `Bearer ${token}`)
+        .json({ ok: true, message: "User Logged In", user, token })
+    );
   } catch (error) {
     return res.status(400).json({
       ok: false,
@@ -80,6 +84,17 @@ const login = async (req, res) => {
     });
   }
 };
+
+// Access the "Authorization" header from the response.
+// const authorizationHeader = response.headers.get('authorization');
+
+// You can then parse the header to get the token.
+// const token = authorizationHeader ? authorizationHeader.split(' ')[1] : null;
+
+// const headers = {
+//   Authorization: `Bearer ${token}`, // Be sure to include "Bearer" and a space before the token.
+//   'Content-Type': 'application/json', // You can set other headers as needed.
+// };
 
 const profile = async (req, res) => {
   try {

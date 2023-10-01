@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { PropagateLoader } from "react-spinners";
+import { UserContext } from "../UserContext";
 
 const modules = {
   toolbar: [
@@ -34,6 +35,7 @@ const formats = [
 ];
 
 const EditPost = () => {
+  const { user } = useContext(UserContext);
   const { id } = useParams();
   //   const [post, setPost] = useState({});
 
@@ -103,6 +105,10 @@ const EditPost = () => {
       throw new Error(`Error Editing Post Catch: ${error}`);
     }
   };
+
+  if (!user.username) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <form className="create_form" onSubmit={handleSubmit}>

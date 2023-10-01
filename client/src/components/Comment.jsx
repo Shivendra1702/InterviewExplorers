@@ -1,23 +1,47 @@
 import { format } from "date-fns";
+import { AiFillDelete } from "react-icons/ai";
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 const Comment = ({ comment }) => {
+  const DeleteComment = () => {
+    fetch(`${import.meta.env.VITE_NODE_API}/deletecomment/${comment._id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.ok) {
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        throw new Error(`Error in deleting comment ${err}`);
+      });
+  };
   return (
     <div className="comment_wrapper">
       <div className="user_comment">
         <div className="user_name">
           <div className="user_photo">
-            <img src={comment.userId.photo.url} alt="user" />
+            <img src={comment?.photo} alt="user" />
           </div>
 
-          <h2>{comment.userId.username}</h2>
-          <time>
-            {format(new Date(comment.createdAt), "MMM dd , yyyy hh:mm")}
-          </time>
+          <h2>{comment?.username}</h2>
+          {comment?.createdAt &&
+            format(new Date(comment.createdAt), "MMM dd , yyyy hh:mm")}
+
+          <span
+            onClick={DeleteComment}
+            style={{
+              cursor: "pointer",
+              fontSize: "1.5rem",
+            }}
+          >
+            <AiFillDelete />
+          </span>
         </div>
 
         <div className="user_comment_text">
-          <p>{comment.comment}</p>
+          <p>{comment?.comment}</p>
         </div>
       </div>
     </div>

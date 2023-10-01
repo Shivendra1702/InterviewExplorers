@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Post = require("../models/Post");
 const User = require("../models/User");
+const Comment = require("../models/Comment");
 const cloudinary = require("cloudinary").v2;
 
 const createPost = async (req, res) => {
@@ -74,10 +75,7 @@ const getAllPosts = async (req, res) => {
 const getSinglePost = async (req, res) => {
   try {
     const postId = req.params.id;
-    const post = await Post.findById(postId).populate(
-      "comments.userId",
-      "username photo.url"
-    );
+    const post = await Post.findById(postId);
     return res.status(200).json({
       ok: true,
       message: "Post Fetched",
@@ -177,24 +175,59 @@ const addComment = async (req, res) => {
         message: `PostId, UserId and Comment Required`,
       });
     }
-    const post = await Post.findById(postId);
-    post.comments.push({
+    const user = await User.findById(userId);
+    const newComment = await Comment.create({
       postId,
       userId,
+      username: user.username,
+      photo: user.photo.url,
       comment,
     });
-    post.save({
-      validateBeforeSave: false,
-    });
+
     return res.status(200).json({
       ok: true,
       message: "Comment Added",
-      post,
+      newComment,
     });
   } catch (error) {
     return res.json({
       ok: false,
       message: `Error Adding Comment: ${error}`,
+    });
+  }
+};
+
+const getComments = async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    const comments = await Comment.find({ postId }).sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      ok: true,
+      message: "Comments Fetched",
+      comments,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      message: `Error Fetching Comments: ${error}`,
+    });
+  }
+};
+
+const deleteComment = async (req, res) => {
+  try {
+    const commentId = req.params.id;
+    await Comment.findByIdAndDelete(commentId);
+    return res.status(200).json({
+      ok: true,
+      message: "Comment Deleted",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      message: `Error Deleting Comment: ${error}`,
     });
   }
 };
@@ -207,4 +240,6 @@ module.exports = {
   deletePost,
   editPost,
   addComment,
+  getComments,
+  deleteComment,
 };

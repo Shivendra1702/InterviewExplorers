@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -47,12 +47,30 @@ const Header = () => {
       <nav className="">
         {user.username ? (
           <>
-            <Link to="/create" onClick={handleHam}>
+            <NavLink
+              to="/create"
+              onClick={handleHam}
+              style={({ isActive, isPending }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isPending ? "red" : "black",
+                };
+              }}
+            >
               NewPost
-            </Link>
-            <Link to="/profile" onClick={handleHam}>
+            </NavLink>
+            <NavLink
+              to="/profile"
+              onClick={handleHam}
+              style={({ isActive, isPending }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isPending ? "red" : "black",
+                };
+              }}
+            >
               Profile
-            </Link>
+            </NavLink>
             <button className="logout_btn" onClick={handleLogout}>
               <span onClick={handleHam} style={{ color: "white" }}>
                 Logout
@@ -61,12 +79,30 @@ const Header = () => {
           </>
         ) : (
           <>
-            <Link to="/login" onClick={handleHam}>
+            <NavLink
+              to="/login"
+              onClick={handleHam}
+              style={({ isActive, isPending }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isPending ? "red" : "black",
+                };
+              }}
+            >
               Login
-            </Link>
-            <Link to="/register" onClick={handleHam}>
+            </NavLink>
+            <NavLink
+              to="/register"
+              onClick={handleHam}
+              style={({ isActive, isPending }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "",
+                  color: isPending ? "red" : "black",
+                };
+              }}
+            >
               Register
-            </Link>
+            </NavLink>
           </>
         )}
       </nav>
