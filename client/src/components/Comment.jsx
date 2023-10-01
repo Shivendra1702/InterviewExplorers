@@ -1,8 +1,12 @@
 import { format } from "date-fns";
 import { AiFillDelete } from "react-icons/ai";
+import { UserContext } from "../UserContext";
+import { useContext } from "react";
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 const Comment = ({ comment }) => {
+  const { user } = useContext(UserContext);
+
   const DeleteComment = () => {
     fetch(`${import.meta.env.VITE_NODE_API}/deletecomment/${comment._id}`, {
       method: "DELETE",
@@ -29,15 +33,17 @@ const Comment = ({ comment }) => {
           {comment?.createdAt &&
             format(new Date(comment.createdAt), "MMM dd , yyyy hh:mm")}
 
-          <span
-            onClick={DeleteComment}
-            style={{
-              cursor: "pointer",
-              fontSize: "1.5rem",
-            }}
-          >
-            <AiFillDelete />
-          </span>
+          {user._id == comment?.userId && (
+            <span
+              onClick={DeleteComment}
+              style={{
+                cursor: "pointer",
+                fontSize: "1.5rem",
+              }}
+            >
+              <AiFillDelete />
+            </span>
+          )}
         </div>
 
         <div className="user_comment_text">
