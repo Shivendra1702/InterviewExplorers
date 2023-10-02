@@ -14,9 +14,9 @@ const Post = ({ post }) => {
           <h2>{post.title}</h2>
         </Link>
         <p className="info">
-          <a href="" className="author">
+          <span className="author">
             {post.author}
-          </a>
+          </span>
           <time>{format(new Date(post.createdAt), "MMM dd , yyyy hh:mm")}</time>
         </p>
 

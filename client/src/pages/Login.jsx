@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { PropagateLoader } from "react-spinners";
+import { TbLogin2 } from "react-icons/tb";
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -43,17 +44,26 @@ const Login = () => {
   return (
     <>
       <form onSubmit={login} className="login">
-        <h1>Login</h1>
+        <h1
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
+          }}
+        >
+          Login <TbLogin2 />
+        </h1>
         <input
           type="email"
-          placeholder="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           name="email"
         />
         <input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           name="password"

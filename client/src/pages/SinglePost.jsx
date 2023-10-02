@@ -5,6 +5,7 @@ import { PropagateLoader } from "react-spinners";
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import Comment from "../components/Comment";
+import { GrAdd } from "react-icons/gr";
 
 const SinglePost = () => {
   const { user } = useContext(UserContext);
@@ -146,9 +147,12 @@ const SinglePost = () => {
             </div>
             {user._id &&
               (commentInputLoader ? (
-                <div className="loader" style={{
-                  height: "50px",
-                }}>
+                <div
+                  className="loader"
+                  style={{
+                    height: "50px",
+                  }}
+                >
                   <PropagateLoader color="#000000" />
                 </div>
               ) : (
@@ -160,15 +164,31 @@ const SinglePost = () => {
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                   />
-                  <button className="f_button" onClick={handleAddComment}>
-                    Add Comment
+                  <button
+                    className="f_button"
+                    onClick={handleAddComment}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <GrAdd /> Add Comment
                   </button>
                 </div>
               ))}
 
             <div className="all_comments">
               {comments?.map((comment) => {
-                return <Comment key={comment?._id} comment={comment} />;
+                return (
+                  <Comment
+                    key={comment?._id}
+                    comment={comment}
+                    comments={comments}
+                    setComments={setComments}
+                  />
+                );
               })}
             </div>
           </div>

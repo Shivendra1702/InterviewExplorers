@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     credentials: true,
+    // origin: "http://127.0.0.1:5173",
     origin: "https://interviewexplorers-xi2b.onrender.com",
   })
 );

@@ -5,7 +5,7 @@ import { useContext } from "react";
 // import { Navigate, useNavigate } from "react-router-dom";
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-const Comment = ({ comment }) => {
+const Comment = ({ comment, comments, setComments }) => {
   // const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
@@ -16,7 +16,8 @@ const Comment = ({ comment }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.ok) {
-          window.location.reload();
+          setComments(comments.filter((c) => c._id !== comment._id));
+          // window.location.reload();
           // navigate(`/post/${comment.postId}`);
           // return Navigate(`/post/${comment.postId}`);
         }

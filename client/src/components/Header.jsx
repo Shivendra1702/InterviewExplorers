@@ -1,8 +1,9 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../UserContext";
 import { GiHamburgerMenu } from "react-icons/gi";
-// import { AiOutlineRollback } from "react-icons/ai";
+import { RxCross1 } from "react-icons/rx";
+import { TbLogout } from "react-icons/tb";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,9 +15,16 @@ const Header = () => {
     navigate("/");
   };
 
+  const [activeHam, setActiveHam] = useState(false);
+
   const handleHam = () => {
     const nav = document.querySelector("nav");
     nav.classList.toggle("active");
+    if (nav.getAttribute("class") == "active") {
+      setActiveHam(true);
+    } else {
+      setActiveHam(false);
+    }
   };
 
   return (
@@ -26,7 +34,11 @@ const Header = () => {
           <span style={{ fontWeight: "1" }}>Interview</span>Explorers
         </Link>
         <span className="ham_span">
-          <GiHamburgerMenu className="ham" onClick={handleHam} />
+          {activeHam ? (
+            <RxCross1 className="ham" onClick={handleHam} />
+          ) : (
+            <GiHamburgerMenu className="ham" onClick={handleHam} />
+          )}
         </span>
       </div>
       <nav className="">
@@ -54,11 +66,19 @@ const Header = () => {
                 };
               }}
             >
-              Profile
+              Profile 
             </NavLink>
             <button className="logout_btn" onClick={handleLogout}>
-              <span onClick={handleHam} style={{ color: "white" }}>
-                Logout
+              <span
+                onClick={handleHam}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "10px",
+                }}
+              >
+                Logout <TbLogout />
               </span>
             </button>
           </>

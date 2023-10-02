@@ -40,7 +40,7 @@ const Register = () => {
   return (
     <>
       <form onSubmit={register} className="register">
-        <h1>Register</h1>
+        <h1>Register </h1>
         <input
           type="text"
           placeholder="username"
