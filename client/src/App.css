@@ -4,6 +4,16 @@
   box-sizing: border-box;
   color: #222;
   font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-color: #a1a1a1;
+  transform-origin: 0%;
 }
 
 img {
@@ -113,11 +123,10 @@ div.post a {
   div.post div.texts p.info {
     flex-direction: column;
     justify-content: center;
-    gap:5px;
+    gap: 5px;
   }
   div.post div.texts h2 {
     font-size: 1.2em;
-    
   }
   div.post p.summary {
     display: none;

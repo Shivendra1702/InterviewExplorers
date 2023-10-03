@@ -7,6 +7,7 @@ import { UserContext } from "../UserContext";
 import Comment from "../components/Comment";
 import { GrAdd } from "react-icons/gr";
 
+
 const SinglePost = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
@@ -99,102 +100,105 @@ const SinglePost = () => {
   };
 
   return (
-    <div className="single_post">
-      {loader || delLoader ? (
-        <div className="loader">
-          <PropagateLoader color="#000000" />
-        </div>
-      ) : (
-        <>
-          <div className="heading">
-            <h1>{post.title}</h1>
+    <>
+      
+      <div className="single_post">
+        {loader || delLoader ? (
+          <div className="loader">
+            <PropagateLoader color="#000000" />
           </div>
-
-          <div className="meta_data">
-            <span>{post.author}</span>
-            <time>
-              {post.createdAt
-                ? format(new Date(post.createdAt), "MMM dd , yyyy hh:mm")
-                : "N/A"}
-            </time>
-          </div>
-
-          <div className="cover_image">
-            <img src={post.cover?.url} alt="" />
-          </div>
-
-          <div
-            dangerouslySetInnerHTML={{ __html: post.content }}
-            className="content"
-          />
-
-          {post.user == user._id ? (
-            <div className="del_edit_btns ">
-              <button className="f_button edit" onClick={handleEdit}>
-                Edit
-              </button>
-              <button className="f_button del" onClick={handleDelete}>
-                Delete
-              </button>
+        ) : (
+          <>
+            <div className="heading">
+              <h1>{post.title}</h1>
             </div>
-          ) : (
-            ""
-          )}
 
-          <div className="comment_section">
-            <div className="comment_heading">
-              <h1>{comments.length} Comments ~</h1>
+            <div className="meta_data">
+              <span>{post.author}</span>
+              <time>
+                {post.createdAt
+                  ? format(new Date(post.createdAt), "MMM dd , yyyy hh:mm")
+                  : "N/A"}
+              </time>
             </div>
-            {user._id &&
-              (commentInputLoader ? (
-                <div
-                  className="loader"
-                  style={{
-                    height: "50px",
-                  }}
-                >
-                  <PropagateLoader color="#000000" />
-                </div>
-              ) : (
-                <div className="comment_input">
-                  <input
-                    type="text"
-                    placeholder="Write your comment here"
-                    name="comment"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                  <button
-                    className="f_button"
-                    onClick={handleAddComment}
+
+            <div className="cover_image">
+              <img src={post.cover?.url} alt="" />
+            </div>
+
+            <div
+              dangerouslySetInnerHTML={{ __html: post.content }}
+              className="content"
+            />
+
+            {post.user == user._id ? (
+              <div className="del_edit_btns ">
+                <button className="f_button edit" onClick={handleEdit}>
+                  Edit
+                </button>
+                <button className="f_button del" onClick={handleDelete}>
+                  Delete
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+
+            <div className="comment_section">
+              <div className="comment_heading">
+                <h1>{comments.length} Comments ~</h1>
+              </div>
+              {user._id &&
+                (commentInputLoader ? (
+                  <div
+                    className="loader"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "10px",
+                      height: "50px",
                     }}
                   >
-                    <GrAdd /> Add Comment
-                  </button>
-                </div>
-              ))}
+                    <PropagateLoader color="#000000" />
+                  </div>
+                ) : (
+                  <div className="comment_input">
+                    <input
+                      type="text"
+                      placeholder="Write your comment here"
+                      name="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                    <button
+                      className="f_button"
+                      onClick={handleAddComment}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <GrAdd /> Add Comment
+                    </button>
+                  </div>
+                ))}
 
-            <div className="all_comments">
-              {comments?.map((comment) => {
-                return (
-                  <Comment
-                    key={comment?._id}
-                    comment={comment}
-                    comments={comments}
-                    setComments={setComments}
-                  />
-                );
-              })}
+              <div className="all_comments">
+                {comments?.map((comment) => {
+                  return (
+                    <Comment
+                      key={comment?._id}
+                      comment={comment}
+                      comments={comments}
+                      setComments={setComments}
+                    />
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
